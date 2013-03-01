@@ -28,8 +28,8 @@ end
   end
 
   rabbitmq_user user do
-    user_tag 'administrator'
-    action :set_user_tags
+    tag 'administrator'
+    action :set_tags
   end
 
   vhosts.each do |vhost_name|
