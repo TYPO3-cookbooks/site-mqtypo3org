@@ -1,47 +1,34 @@
 include_recipe "rabbitmq"
 
-node.set['rabbitmq']['erlang_cookie'] = "1q2o890ajfakjhr2kjhakjhasd"
+include_recipe "rabbitmq::plugin_management"
+include_recipe "rabbitmq::user_management"
+include_recipe "rabbitmq::mgmt_console"
 
-rabbitmq_plugin "rabbitmq_management" do
-  notifies :restart, "service[rabbitmq-server]"
-end
 
-vhosts = [
-  'infrastructure',
-  'infrastructure_dev'
-]
+####################################
+# RabbitMQ users
+####################################
 
-vhosts.each do |vhost|
-  rabbitmq_vhost vhost
-end
+search("users", "*:*").reject{ |u| u['rabbitmq'].nil? || u['password'].nil? }.each do |user|
+  Chef::Log.info "Found user #{user['id']} as rabbitmq user"
 
-{
-  'bbringenberg' => 'bbringenberg',
-  'sgebert' => 'sgebert',
-  'mstucki' => 'mstucki',
-  'dev.forge.typo3.org' => 'dev.forge.typo3.org'
-}.each do |user, pass|
-
-  rabbitmq_user user do
-    password pass
+  rabbitmq_user user['id'] do
+    password user['password']
     action :add
+    # notifies :restart, "service[#{node['rabbitmq']['service_name']}]"
   end
-
-  rabbitmq_user user do
-    tag 'administrator'
+  rabbitmq_user user['id'] do
+    tag user['rabbitmq']['tag']
     action :set_tags
+    # notifies :restart, "service[#{node['rabbitmq']['service_name']}]"
   end
-
-  vhosts.each do |vhost_name|
-    rabbitmq_user user do
-      vhost vhost_name
-      permissions ".* .* .*"
+  user['rabbitmq']['rights'].each  do |r|
+    rabbitmq_user user['id'] do
+      vhost r['vhost']
+      permissions "#{r['conf']} #{r['write']} #{r['read']}"
       action :set_permissions
+      # notifies :restart, "service[#{node['rabbitmq']['service_name']}]"
     end
   end
 
-end
-
-rabbitmq_user 'guest' do
-  action :delete
 end
