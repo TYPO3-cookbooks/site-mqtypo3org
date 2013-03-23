@@ -4,4 +4,6 @@ normal[:rabbitmq][:disabled_users] = ['guest']
 
 normal[:rabbitmq][:virtualhosts] = ['infrastructure', 'infrastructure_dev']
 
-normal[:rabbitmq][:ssl] = true
+default['site-mqtypo3org'][:proxy][:hostname] = node[:fqdn]
+default['site-mqtypo3org'][:proxy][:ssl] = true
+default['site-mqtypo3org'][:proxy][:ssl_certificate] = nil

@@ -1,0 +1,19 @@
+server {
+  server_name  <%= @server_name %>;
+
+  <% if node['site-mqtypo3org']['proxy']['ssl'] %>
+  listen       443;
+
+  ssl                  on;
+  ssl_certificate      <%= @ssl_certfile %>;
+  ssl_certificate_key  <%= @ssl_keyfile %>;
+  <% else %>
+  listen       80;
+  <% end %>
+
+  location / {
+    proxy_pass             http://localhost:15672/;
+    proxy_set_header       Host $host;
+    proxy_buffering off;
+  }
+}

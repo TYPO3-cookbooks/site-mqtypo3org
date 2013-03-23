@@ -46,3 +46,5 @@ search("users", "*:*").reject{ |u| u['rabbitmq'].nil? }.each do |user|
   end
 
 end
+
+include_recipe "site-mqtypo3org::proxy"
