@@ -29,8 +29,10 @@ search("users", "*:*").reject{ |u| u['rabbitmq'].nil? }.each do |user|
     raise "Cannot find password for rabbitmq user '#{user['id']}' in data bag 'passwords/#{node["chef_environment"]}'."
   end
 
+  password = all_password_data["rabbitmq"][my_fqdn_cleaned][user['id']]
+
   rabbitmq_user user['id'] do
-    password user['password']
+    password password
     action :add
   end
   rabbitmq_user user['id'] do
