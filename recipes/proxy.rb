@@ -7,7 +7,9 @@ if node['site-mqtypo3org']['proxy']['ssl']
 
   # don't use snakeoil CA, if specified otherwise
   if node['site-mqtypo3org']['proxy']['ssl_certificate']
-    ssl_certificate node['site-mqtypo3org']['proxy']['ssl_certificate']
+    ssl_certificate node['site-mqtypo3org']['proxy']['ssl_certificate'] do
+      ca_bundle_combined true
+    end
     ssl_certfile_path = node['ssl_certificates']['path'] + "/" + node['site-mqtypo3org']['proxy']['ssl_certificate'] + ".crt"
     ssl_keyfile_path  = node['ssl_certificates']['path'] + "/" + node['site-mqtypo3org']['proxy']['ssl_certificate'] + ".key"
   end

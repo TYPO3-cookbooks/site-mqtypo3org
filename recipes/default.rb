@@ -14,10 +14,13 @@ include_recipe "rabbitmq::mgmt_console"
 search("users", "*:*").reject{ |u| u['rabbitmq'].nil? }.each do |user|
   Chef::Log.info "Found user #{user['id']} as rabbitmq user"
 
-  Chef::Log.info "Opening data bag passwords/#{node.chef_environment}"
+  # remove pre- from environment (if we're eg in pre-production, which almost equals production)
+  environment = node.chef_environment.gsub(/pre-/, '')
+
+  Chef::Log.info "Opening data bag passwords/#{environment}"
 
   # get all passwords for this environment
-  all_password_data = Chef::EncryptedDataBagItem.load("passwords", node.chef_environment)
+  all_password_data = Chef::EncryptedDataBagItem.load("passwords", environment)
 
   # remove . from fqdn
   # my_fqdn_cleaned = node["fqdn"].gsub(/\./, "")
@@ -26,7 +29,7 @@ search("users", "*:*").reject{ |u| u['rabbitmq'].nil? }.each do |user|
 
   Chef::Log.info "Looking for password rabbitmq.#{my_fqdn_cleaned}.#{user['id']}"
   if all_password_data["rabbitmq"][my_fqdn_cleaned][user['id']].nil?
-    raise "Cannot find password for rabbitmq user '#{user['id']}' in data bag 'passwords/#{node["chef_environment"]}'."
+    raise "Cannot find password for rabbitmq user '#{user['id']}' in data bag 'passwords/#{environment}'."
   end
 
   password = all_password_data["rabbitmq"][my_fqdn_cleaned][user['id']]
