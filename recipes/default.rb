@@ -11,28 +11,13 @@ include_recipe "rabbitmq::mgmt_console"
 
 # look in the "users" data bag for all entries having a "rabbitmq" key and process them
 
-search("users", "*:*").reject{ |u| u['rabbitmq'].nil? }.each do |user|
+search("users", "*:*").reject{ |user| user['rabbitmq'].nil? }.each do |user|
   Chef::Log.info "Found user #{user['id']} as rabbitmq user"
 
-  # remove pre- from environment (if we're eg in pre-production, which almost equals production)
-  environment = node.chef_environment.gsub(/pre-/, '')
+  myself = node[:'site-mqtypo3org']['hostname']
 
-  Chef::Log.info "Opening data bag passwords/#{environment}"
-
-  # get all passwords for this environment
-  all_password_data = Chef::EncryptedDataBagItem.load("passwords", environment)
-
-  # remove . from fqdn
-  # my_fqdn_cleaned = node["fqdn"].gsub(/\./, "")
-
-  my_fqdn_cleaned = "mqtypo3org"
-
-  Chef::Log.info "Looking for password rabbitmq.#{my_fqdn_cleaned}.#{user['id']}"
-  if all_password_data["rabbitmq"][my_fqdn_cleaned][user['id']].nil?
-    raise "Cannot find password for rabbitmq user '#{user['id']}' in data bag 'passwords/#{environment}'."
-  end
-
-  password = all_password_data["rabbitmq"][my_fqdn_cleaned][user['id']]
+  include_recipe "chef-vault::default"
+  password = chef_vault_password(myself, user['id'])
 
   rabbitmq_user user['id'] do
     password password
