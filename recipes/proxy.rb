@@ -16,7 +16,7 @@ if node[:'site-mqtypo3org'][:proxy][:ssl]
 end
 
 
-template "#{node[:nginx][:dir]}/sites-available/#{node[:site-mqtypo3org][:proxy][:hostname]}" do
+template "#{node[:nginx][:dir]}/sites-available/#{node[:'site-mqtypo3org'][:proxy][:hostname]}" do
   source "nginx-site.erb"
   mode "0644"
   notifies :restart, "service[nginx]"
