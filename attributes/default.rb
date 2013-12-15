@@ -1,3 +1,6 @@
+override[:rabbitmq][:version] = "3.2.2"
+override[:rabbitmq][:package] = "https://www.rabbitmq.com/releases/rabbitmq-server/v#{node['rabbitmq']['version']}/rabbitmq-server_#{node['rabbitmq']['version']}-1_all.deb"
+
 # make sure that there's no guest account!
 override[:rabbitmq][:enabled_users] = []
 override[:rabbitmq][:disabled_users] = ['guest']
