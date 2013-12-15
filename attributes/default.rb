@@ -7,6 +7,10 @@ default[:rabbitmq][:disabled_users] = ["guest"]
 
 default[:rabbitmq][:virtualhosts] = ["infrastructure", "infrastructure_dev"]
 
+default[:rabbitmq][:ssl] = true
+default[:rabbitmq][:ssl_cert] = "/etc/ssl_certs/wildcard.typo3.org.crt"
+default[:rabbitmq][:ssl_key] = "/etc/ssl_certs/wildcard.typo3.org.key"
+
 default[:'site-mqtypo3org'][:hostname] = "mq.typo3.org"
 default[:'site-mqtypo3org'][:proxy][:hostname] = "mq.typo3.org"
 default[:'site-mqtypo3org'][:proxy][:ssl] = true
