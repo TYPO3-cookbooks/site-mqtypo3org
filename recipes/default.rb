@@ -14,7 +14,7 @@ include_recipe "rabbitmq::mgmt_console"
 search("users", "*:*").reject{ |user| user['rabbitmq'].nil? }.each do |user|
   Chef::Log.info "Found user #{user['id']} as rabbitmq user"
 
-  myself = node[:"site-mqtypo3org"][:hostname]
+  myself = node[:'site-mqtypo3org'][:hostname]
 
   include_recipe "chef-vault::default"
   password = chef_vault_password(myself, user['id'])
