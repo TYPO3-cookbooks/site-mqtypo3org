@@ -16,7 +16,7 @@ search("users", "*:*").reject{ |user| user['rabbitmq'].nil? }.each do |user|
 
   myself = node[:'site-mqtypo3org'][:hostname]
 
-  include_recipe "chef-vault::default"
+  include_recipe "t3-chef-vault::default"
   password = chef_vault_password(myself, user['id'])
 
   rabbitmq_user user['id'] do
