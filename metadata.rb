@@ -7,6 +7,6 @@ long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
 version "0.0.28"
 
 depends "rabbitmq", "~> 2.3.2"
-depends "nginx"
+depends "nginx",    "= 1.6.0"
 depends "ssl_certificates"
 depends "t3-chef-vault"
