@@ -10,6 +10,7 @@ depends "t3-base",          "~> 0.2.0"
 
 depends "t3-chef-vault",    "~> 1.0.0"
 depends "ssl_certificates", "~> 1.1.0"
+depends "zabbix-custom-checks",   "~> 0.2.0"
 
 depends "rabbitmq",         "= 2.3.2"
 depends "nginx",            "= 1.6.0"

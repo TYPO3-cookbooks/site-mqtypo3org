@@ -1,4 +1,5 @@
 include_recipe "nginx"
+include_recipe "zabbix-custom-checks::nginx"
 
 if node[:'site-mqtypo3org'][:proxy][:ssl]
 
