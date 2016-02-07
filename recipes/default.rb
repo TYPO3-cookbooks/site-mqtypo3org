@@ -1,3 +1,5 @@
+include_recipe "t3-base"
+
 include_recipe "rabbitmq"
 
 include_recipe "rabbitmq::plugin_management"

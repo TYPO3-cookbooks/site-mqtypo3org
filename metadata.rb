@@ -6,7 +6,10 @@ description      "Installs/Configures mq.typo3.org"
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
 version "0.0.30"
 
-depends "rabbitmq", "~> 2.3.2"
-depends "nginx",    "= 1.6.0"
-depends "ssl_certificates"
-depends "t3-chef-vault"
+depends "t3-base",          "~> 0.2.0"
+
+depends "t3-chef-vault",    "~> 1.0.0"
+depends "ssl_certificates", "~> 1.1.0"
+
+depends "rabbitmq",         "= 2.3.2"
+depends "nginx",            "= 1.6.0"
