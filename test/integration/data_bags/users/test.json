@@ -1,0 +1,14 @@
+{
+  "id": "test",
+  "rabbitmq": {
+    "tag": "",
+    "rights": [
+      {
+        "vhost": "/",
+        "conf":  ".*",
+        "write": ".*",
+        "read":  ".*"
+      }
+    ]
+  }
+}
