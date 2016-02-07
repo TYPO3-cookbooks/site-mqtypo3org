@@ -15,3 +15,7 @@ default[:'site-mqtypo3org'][:hostname] = "mq.typo3.org"
 default[:'site-mqtypo3org'][:proxy][:hostname] = "mq.typo3.org"
 default[:'site-mqtypo3org'][:proxy][:ssl] = true
 default[:'site-mqtypo3org'][:proxy][:ssl_certificate] = "wildcard.typo3.org"
+
+# this is a bit hacky, but only needed for Debian Squeeze. We need the correct version here for
+# zabbix-custom-checks. See https://github.com/TYPO3-cookbooks/zabbix-custom-checks/commit/00f8035ba8a092dabd6201c3c3759a58ba8100c4
+default['nginx']['version'] = "0.7.67"
