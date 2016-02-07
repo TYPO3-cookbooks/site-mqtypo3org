@@ -74,7 +74,7 @@ GRAPH
   runit (1.7.6)
     packagecloud (>= 0.0.0)
   screen (0.7.0)
-  site-mqtypo3org (0.0.31)
+  site-mqtypo3org (0.0.32)
     nginx (= 1.6.0)
     rabbitmq (= 2.3.2)
     ssl_certificates (~> 1.1.0)
