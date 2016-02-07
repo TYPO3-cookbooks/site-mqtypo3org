@@ -1,15 +1,10 @@
+.vagrant
 *~
 *#
 .#*
 \#*#
 .*.sw[a-z]
 *.un~
-pkg/
-
-# Berkshelf
-.vagrant
-/cookbooks
-Berksfile.lock
 
 # Bundler
 Gemfile.lock
@@ -18,3 +13,5 @@ bin/*
 
 .kitchen/
 .kitchen.local.yml
+test/integration/data_bags/certificates/wildcard_typo3_org.json
+.idea/
