@@ -1,5 +1,5 @@
 include_recipe "nginx"
-include_recipe "zabbix-custom-checks::nginx"
+include_recipe "zabbix-custom-checks::nginx" if node['t3-base']['flags']['production']
 
 if node[:'site-mqtypo3org'][:proxy][:ssl]
 
